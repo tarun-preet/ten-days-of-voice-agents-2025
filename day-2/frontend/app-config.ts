@@ -20,9 +20,9 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'LiveKit',
-  pageTitle: 'LiveKit Voice Agent',
-  pageDescription: 'A voice agent built with LiveKit',
+  companyName: 'Barista',
+  pageTitle: 'Barista Voice Agent',
+  pageDescription: 'A Barista voice agent',
 
   supportsChatInput: true,
   supportsVideoInput: true,

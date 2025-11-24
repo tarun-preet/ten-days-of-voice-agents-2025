@@ -16,7 +16,7 @@ export default async function ComponentsLayout({ children }: { children: React.R
             <p className="text-muted-foreground max-w-80 leading-tight text-pretty">
               A set of UI components for building LiveKit-powered voice experiences.
             </p>
-            <p className="text-muted-foreground max-w-prose text-balance">
+            {/* <p className="text-muted-foreground max-w-prose text-balance">
               Built with{' '}
               <a href="https://shadcn.com" className="underline underline-offset-2">
                 Shadcn
@@ -30,7 +30,7 @@ export default async function ComponentsLayout({ children }: { children: React.R
                 LiveKit
               </a>
               .
-            </p>
+            </p> */}
             <p className="text-foreground max-w-prose text-balance">Open Source.</p>
           </header>
 
