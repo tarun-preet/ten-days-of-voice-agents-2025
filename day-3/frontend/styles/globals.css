@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Radius */
+  --radius: 0.625rem;
+
+  /* Therapist-office palette: warm, calming pastels */
+  --background: #f3efe7; /* soft cream */
+  --foreground: #222222; /* dark text */
+  --card: #ffffff; /* white cards */
+  --card-foreground: #222222;
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #4fb3c8; /* calming teal */
+  --primary-foreground: #ffffff;
+  --secondary: #f7d9c4; /* warm peach */
+  --secondary-foreground: #222222;
+  --muted: #e9ece8; /* muted paper */
+  --muted-foreground: #596166;
+  --accent: #b7dcc6; /* sage */
+  --accent-foreground: #222222;
+  --destructive: #e07b7b; /* gentle red */
+  --border: #e6e4df;
+  --input: #ffffff;
+  --ring: #a7d5d9;
+  --chart-1: #4fb3c8;
+  --chart-2: #b7dcc6;
+  --chart-3: #f7d9c4;
+  --chart-4: #c8b6f7;
+  --chart-5: #ffcc99;
+  --sidebar: #fffaf6;
+  --sidebar-foreground: #222222;
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* dark mode: desaturated version of the palette */
+.dark {
+  --background: #0f1720; /* deep slate */
+  --foreground: #f5f7f6;
+  --card: #111827;
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.269 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #2b8fa1;
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: #764b3a;
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: #1f2937;
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: #5d8f73;
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: #b04040;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.04);
+  --ring: rgba(164, 210, 216, 0.6);
+  --chart-1: #3c9aa7;
+  --chart-2: #5f957f;
+  --chart-3: #9c7ea3;
+  --chart-4: #4b5563;
+  --chart-5: #6aa7a0;
+  --sidebar: #0b1220;
+  --sidebar-foreground: #f5f7f6;
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+/* Additional visual styles for the therapist-office vibe */
+@layer components {
+  /* subtle layered radial gradients for soft pastel blobs */
+  body {
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(79, 179, 200, 0.08), transparent 16%),
+      radial-gradient(circle at 90% 80%, rgba(247, 217, 196, 0.06), transparent 22%);
+    background-color: var(--background);
+    background-attachment: fixed;
+  }
+
+  .therapist-card {
+    @apply bg-card text-card-foreground mx-auto w-full max-w-xl rounded-2xl border p-8 shadow-lg;
+    color: #000000;
+    border: 1px solid var(--border);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+    backdrop-filter: blur(4px) saturate(120%);
+    transition:
+      transform 240ms ease,
+      box-shadow 240ms ease;
+    position: relative;
+    overflow: visible;
+  }
+
+  .therapist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(79, 179, 200, 0.12);
+  }
+
+  .welcome-bot {
+    width: 84px;
+    height: 84px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    box-shadow: 0 8px 20px rgba(79, 179, 200, 0.12);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--primary-foreground);
+  }
+
+  button[data-slot='button'].shadow-md {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    border-radius: 9999px;
+  }
+
+  .subtitle {
+    color: var(--foreground);
+    opacity: 0.9;
+    font-size: 1.05rem;
+  }
+
+  .muted-box {
+    @apply mt-6 rounded-xl p-4 text-sm;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.35));
+    border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  /* Micro-interactions */
+  .bot-bounce {
+    animation: bot-bounce 3000ms ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes bot-bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px) rotate(-0.5deg);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .button-glow {
+    transition:
+      box-shadow 250ms ease,
+      transform 160ms ease;
+  }
+  .button-glow:hover,
+  .button-glow:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(79, 179, 200, 0.12);
+  }
+
+  .chat-pop {
+    animation: chat-pop 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  @keyframes chat-pop {
+    0% {
+      opacity: 0.55;
+      transform: scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Agent-control gradient & subtle depth */
+  .agent-control {
+    border: 1px solid var(--border);
+    background: linear-gradient(90deg, rgba(79, 179, 200, 0.04), rgba(183, 220, 198, 0.02));
+    box-shadow: 0 12px 24px rgba(79, 179, 200, 0.04);
+  }
+  /* Ear animation indicating agent listening */
+  .agent-ear {
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    transform-origin: center;
+    transition: transform 160ms ease;
+    opacity: 0.9;
+    background: linear-gradient(180deg, rgba(79, 179, 200, 0.18), rgba(183, 220, 198, 0.06));
+    box-shadow: 0 6px 12px rgba(79, 179, 200, 0.06);
+  }
+  .agent-ear.ear-listen {
+    animation: ear-wave 900ms ease-in-out infinite;
+  }
+  @keyframes ear-wave {
+    0% {
+      transform: rotate(0deg) translateX(0);
+    }
+    50% {
+      transform: rotate(-6deg) translateX(-2px);
+    }
+    100% {
+      transform: rotate(0deg) translateX(0);
+    }
+  }
+
+  /* Ring that briefly pulses when a new message arrives */
+  .agent-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 2px solid rgba(79, 179, 200, 0.28);
+    width: 120%;
+    height: 120%;
+    left: -10%;
+    top: -10%;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition:
+      opacity 200ms ease,
+      transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .agent-ring.ring-announce {
+    animation: ring-pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  @keyframes ring-pop {
+    0% {
+      opacity: 0.85;
+      transform: scale(0.7);
+    }
+    60% {
+      opacity: 0.32;
+      transform: scale(1.15);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.25);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans:
+    var(--font-public-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    var(--font-commit-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-foreground/20 outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utils {
+  .animate-text-shimmer {
+    animation-delay: 0.5s;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: text-shimmer;
+    background: var(--muted-foreground)
+      gradient(
+        linear,
+        100% 0,
+        0 0,
+        from(var(--muted-foreground)),
+        color-stop(0.5, var(--secondary-foreground)),
+        to(var(--muted-foreground))
+      );
+    background: var(--muted-foreground) -webkit-gradient(
+        linear,
+        100% 0,
+        0 0,
+        from(var(--muted-foreground)),
+        color-stop(0.5, var(--secondary-foreground)),
+        to(var(--muted-foreground))
+      );
+    background-repeat: no-repeat;
+    background-size: 50% 200%;
+    display: inline-block;
+  }
+
+  @keyframes text-shimmer {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 250% 0;
+    }
+  }
+}
